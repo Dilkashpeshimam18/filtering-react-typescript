@@ -2,3 +2,9 @@
   display: flex;
   background-color: rgb(231, 231, 231);
 }
+.container1{
+  flex: 0.4;
+}
+.container1{
+  flex: 0.6;
+}

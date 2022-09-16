@@ -1,0 +1,20 @@
+.products{
+    display: flex;
+    flex-wrap: wrap;
+    /* overflow: scroll; */
+}
+.product-Card{
+    width: 300px;
+    height: 250px;
+    background-color: beige;
+    margin: 10px;
+}
+.searchInput{
+    width: 1000px;
+    height: 40px;
+    border-radius: 3px;
+}
+.searchButton{
+    height: 40px;
+    width: 100px;
+}

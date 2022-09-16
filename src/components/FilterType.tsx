@@ -11,8 +11,8 @@ const FilterType = ({type,name}:FilterProps) => {
         <h2>{type}</h2>
         <hr></hr>
         <div className='filterName'>
-            {name.map((name)=>(
-                <li>{name}</li>
+            {name.map((name,key)=>(
+                <li key={key}>{name}</li>
             ))}
 
         </div>
