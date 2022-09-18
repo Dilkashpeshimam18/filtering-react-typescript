@@ -3,9 +3,12 @@ import './Products.css'
 import axios from 'axios'
 import { Item } from './model'
 
-
-const Products = () => {
-    const [products,setProducts]=useState<Item[] | undefined>()
+interface SidebarProps{
+    filterByCategory:() => void,
+    category:boolean
+  }
+const Products = ({filterByCategory,category}:SidebarProps) => {
+    const [products,setProducts]=useState<Item[] | undefined >()
     const [searchValue, setSearchValue]= useState<string>('')
     
     useEffect(()=>{
@@ -28,11 +31,14 @@ const Products = () => {
     <button className='searchButton'>Search</button>
   </div>
     <div className='products'>
+        
         {products?.filter((data)=>{//filter display data on condition
             if(searchValue==''){// if searchterm is empty then show all data 
                 return data
             }else if(data.title.toLowerCase().includes(searchValue.toLowerCase()) || data.category.toLowerCase().includes(searchValue.toLowerCase())){//if title or category match to search term then return data
                 return data
+            }else if(category==true){
+               return data.category
             }
         }).map((value,key)=>{
           return( 

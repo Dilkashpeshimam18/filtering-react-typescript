@@ -6,34 +6,73 @@ import { Item } from './model';
 
 
 
-let category=['Technology', 'Clothing', 'Beauty']
+let category:any[]=[]
 let brand=['Apple', 'Samsung', 'Redmi','Lakme', 'Maybelline', 'Zara']
-let price=['Under 5,000', 'Rs 5,000- Rs 10,000','Rs 10,000- Rs 20,000','Over 20,000']
+let price=['Under 100', 'Under 500','Under 1000']
 
-
-const Sidebar = () => {
+interface SidebarProps{
+  filterByCategory:() => void
+}
+const Sidebar = ({filterByCategory}:SidebarProps) => {
   const [data,setData]=useState<Item[]>([])
+  // const [category,setCategory]= useState<string>('')
   useEffect(()=>{
     axios.get('https://fakestoreapi.com/products')
     .then(response=>{
         console.log(response.data)
         let res=response.data
        setData(res)
-       console.log(data)
+       data.forEach((value)=>{
+        if(!category.includes(value.category)){
+          category.push(value.category)
+
+        }
+       })
+       console.log(category)
+       
+       
+       
     }).catch(error=>{
         console.log(error)
     })
   },[])
   return (
     <div className='sidebar'>
-        <FilterType type='Filter by category' name={category}/>
-        <FilterType type='Filter by brand' name={brand}/>
-        <FilterType type='Filter by price' name={price}/>
+           <div className='filterType'>
+            <h2>Filter by category</h2>
+        <hr></hr>
+        <div className='filterName'>
+       {category.map((value,index)=>{
+        return(
+          <li onClick={filterByCategory} key={index}>{value}</li>
+        )
+       })}
+
+        </div>
+    </div>
+    <div className='filterType'>
+      <h2>Filter by price</h2>
+        <hr></hr>
+        <div className='filterName'>
+          {price.map((value,index)=>{
+            return(
+              <li key={index}>{value}</li>
+            )
+          })}
+          
+
+        </div>
+    </div>
+    
+   
+          </div>
+
+        )
+      
 
 
         
-    </div>
-  )
+  
 }
 
 export default Sidebar

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState,useEffect} from 'react'
 import './FilterType.css'
 
 type FilterProps={
@@ -6,6 +6,9 @@ type FilterProps={
   name:string[]  
 }
 const FilterType = ({type,name}:FilterProps) => {
+  useEffect(()=>{
+    console.log(name)
+  },[])
   return (
     <div className='filterType'>
         <h2>{type}</h2>
