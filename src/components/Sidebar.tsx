@@ -6,20 +6,23 @@ import { Item } from './model';
 
 
 
-let category:any[]=[]
-let brand=['Apple', 'Samsung', 'Redmi','Lakme', 'Maybelline', 'Zara']
+let category:any[] =[]
 let price=['Under 100', 'Under 500','Under 1000']
 
+
 interface SidebarProps{
-  filterByCategory:() => void
+  filterByCategory:(event: React.FormEvent<HTMLSelectElement>) => void,
+  categoryName:string,
 }
-const Sidebar = ({filterByCategory}:SidebarProps) => {
+
+
+const Sidebar = ({filterByCategory,categoryName}:SidebarProps) => {
   const [data,setData]=useState<Item[]>([])
-  // const [category,setCategory]= useState<string>('')
+  // const [categoryName,setCategoryName]=useState<string>('')
+
   useEffect(()=>{
     axios.get('https://fakestoreapi.com/products')
     .then(response=>{
-        console.log(response.data)
         let res=response.data
        setData(res)
        data.forEach((value)=>{
@@ -28,25 +31,40 @@ const Sidebar = ({filterByCategory}:SidebarProps) => {
 
         }
        })
-       console.log(category)
-       
+       localStorage.setItem('categories', category as never)
        
        
     }).catch(error=>{
         console.log(error)
     })
+
   },[])
+
+
+ 
   return (
     <div className='sidebar'>
            <div className='filterType'>
             <h2>Filter by category</h2>
         <hr></hr>
         <div className='filterName'>
-       {category.map((value,index)=>{
-        return(
-          <li onClick={filterByCategory} key={index}>{value}</li>
-        )
-       })}
+      
+        
+          <div>
+          <select
+            name="category-list"
+            id="category-list"
+            onChange={filterByCategory}
+          >
+            {category?.map((value,index)=>
+                <option key={index} value={value}>{value}</option>
+
+           
+            )}
+            
+          </select>
+       </div>
+        
 
         </div>
     </div>

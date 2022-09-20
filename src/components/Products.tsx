@@ -4,10 +4,12 @@ import axios from 'axios'
 import { Item } from './model'
 
 interface SidebarProps{
-    filterByCategory:() => void,
-    category:boolean
+    filterByCategory:(event: React.FormEvent<HTMLSelectElement>) => void,
+    category:boolean,
+    categoryName:string,
+    data:Item[]
   }
-const Products = ({filterByCategory,category}:SidebarProps) => {
+const Products = ({filterByCategory,category, categoryName,data}:SidebarProps) => {
     const [products,setProducts]=useState<Item[] | undefined >()
     const [searchValue, setSearchValue]= useState<string>('')
     
@@ -23,7 +25,12 @@ const Products = ({filterByCategory,category}:SidebarProps) => {
     })
 
     console.log(searchValue)
+    console.log(categoryName)
+    console.log(category)
     },[])
+
+
+  
   return (
     <div>
     <div className='search'>
@@ -32,13 +39,11 @@ const Products = ({filterByCategory,category}:SidebarProps) => {
   </div>
     <div className='products'>
         
-        {products?.filter((data)=>{//filter display data on condition
+        {data?.filter((data)=>{//filter display data on condition
             if(searchValue==''){// if searchterm is empty then show all data 
                 return data
             }else if(data.title.toLowerCase().includes(searchValue.toLowerCase()) || data.category.toLowerCase().includes(searchValue.toLowerCase())){//if title or category match to search term then return data
                 return data
-            }else if(category==true){
-               return data.category
             }
         }).map((value,key)=>{
           return( 
